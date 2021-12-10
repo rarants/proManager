@@ -1,0 +1,121 @@
+<h1 class="text-white center title">
+  Quadro
+  <span class="upper text-info" style="font-weight: 500">{{
+    board.title
+  }}</span>
+</h1>
+<p class="text-white center m-4">
+  Este é o seu quadro {{ board.title }}. Aqui você pode editá-lo de acordo com
+  as suas necessidades. Gerencie suas tarefas e organize-as em colunas e
+  cartões. Você também pode definir etiquetas para facilitar a visualização.
+</p>
+<p class="text-info m-4 pointer">
+  <a routerLink="/user/boards"
+    ><fa-icon [icon]="faAngleLeft" class="fa-1x icon m-2"></fa-icon>Voltar para
+    lista de quadros</a
+  >
+</p>
+<div class="row content">
+  <div class="col-12">
+    <div class="card" [routerLink]="['/user/boards/view']">
+      <div class="card-header">
+        <div class="row">
+          <div class="col mt-2 h5">
+            <span>{{ board.title }}</span>
+          </div>
+          <div class="col" style="text-align: right">
+            <button
+              id="setShowMenu"
+              class="btn btn-info btn-sm text-light p-2 px-3"
+              style="font-weight: 500"
+            >
+              <fa-icon [icon]="faEdit" class="fa-1x icon"></fa-icon> Editar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col col-item" *ngFor="let col of board.collumns">
+            <div class="card">
+              <div class="card-header h6">
+                {{ col.title }}
+              </div>
+              <div class="card-body">
+                <div class="col-item" *ngFor="let task of col.tasks">
+                  <div class="card p-4 pointer new-card">
+                    <h3 style="font-weight: 500">{{ task.title }}</h3>
+                    {{ task.description }}
+                  </div>
+                </div>
+                <div
+                  class="alert alert-info"
+                  role="alert"
+                  *ngIf="col.tasks?.length === 0"
+                >
+                  Não há cartões adicionados até o momento.
+                </div>
+                <br />
+                <hr />
+                <div
+                  class="card p-4 new-card pointer"
+                  (click)="setShowModalTask()"
+                >
+                  <div class="row">
+                    <div class="col-10">Adicionar novo cartão</div>
+                    <div class="col-2 mt-2">
+                      <fa-icon [icon]="faPlus" class="fa-1x icon"></fa-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-item">
+            <div class="card p-4 new-card pointer" (click)="setShowModalTask()">
+              <div class="row">
+                <div class="col-10">Adicionar nova coluna</div>
+                <div class="col-2 mt-2">
+                  <fa-icon [icon]="faPlus" class="fa-1x icon"></fa-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" #modalTask id="modalTask">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title">Gerenciar Tarefas</p>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">body</div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" #modalCol id="modalCol">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title">Gerenciar Colunas</p>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">body</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<div id="sidebarMenu" class="col-2 fixed">
+  <ul class="nav flex-column navbar-light bg-light shadow sidebar p-4 m-0">
+    <img
+      alt="Angular Logo"
+      style="max-width: 4rem"
+      class="mx-auto card-image pointer mb-4"
+      title="Testar agora"
+      src="assets/icon.svg"
+    />
+    <li class="nav-item">
+      <a
+        class="nav-link color active"
+        aria-current="page"
+        routerLink="/user/boards"
+      >
+        <fa-icon [icon]="faHome" class="fa-1x icon mr-2"></fa-icon>Meus quadros
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link color" routerLink="/user/profile">
+        <fa-icon [icon]="faUser" class="fa-1x icon mr-2"></fa-icon>Meu perfil
+      </a>
+    </li>
+    <hr />
+    <li class="nav-item">
+      <a class="nav-link text-danger" routerLink="/">
+        <fa-icon [icon]="faSignOutAlt" class="fa-1x icon mr-2"></fa-icon>Sair
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="col-12 m-0 p-0">
+  <button
+    id="setShowMenu"
+    class="btn btn-light m-4 p-2 px-3"
+    (click)="setShowModal()"
+  >
+    <fa-icon [icon]="faBars" class="fa-1x icon"></fa-icon>
+  </button>
+</div>
+<div class="modal fade" tabindex="-1" #modalShow id="modalShow">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title">Menu</p>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="center">
+            <img
+              alt="Angular Logo"
+              style="max-width: 4rem"
+              class="mx-auto card-image pointer mb-4"
+              title="Testar agora"
+              src="assets/icon.svg"
+            />
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item"
+              routerLink="/user/boards"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <fa-icon [icon]="faHome" class="fa-1x icon mr-2"></fa-icon>Meus
+              quadros
+            </li>
+            <li
+              class="list-group-item"
+              routerLink="/user/profile"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <fa-icon [icon]="faUser" class="fa-1x icon mr-2"></fa-icon>Meu
+              perfil
+            </li>
+            <li
+              class="list-group-item text-danger"
+              routerLink="/"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <fa-icon [icon]="faSignOutAlt" class="fa-1x icon mr-2"></fa-icon
+              >Sair
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

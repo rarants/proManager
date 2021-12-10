@@ -1,0 +1,69 @@
+hr {
+  margin-inline: 40px;
+}
+hr,
+.description {
+  color: #85a3cf;
+}
+
+.content {
+  margin: 0px 1rem 0.5rem 2rem;
+}
+
+/* White section */
+.white-section {
+  background: rgb(144, 144, 144);
+  background: linear-gradient(
+    357deg,
+    rgba(144, 144, 144, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  color: #44576c;
+}
+.white-section .in {
+  padding: 40px;
+  padding-inline: 10%;
+}
+
+/* Properties */
+.center {
+  text-align: center;
+}
+
+.white-footer {
+  margin-top: 30px;
+  background: white;
+  color: #44576c;
+}
+
+/* icons */
+.icon {
+  margin-left: 10px;
+  opacity: 0.7;
+  transition: 0.8s;
+}
+.icon:hover {
+  opacity: 1;
+  transition: 0.8s;
+}
+
+/* links */
+.links-style {
+  text-decoration: none;
+  opacity: 0.8;
+  transition: 0.8s;
+}
+.links-style:hover {
+  text-decoration: none;
+  opacity: 1;
+  transition: 0.8s;
+}
+.primary {
+  color: #85a3cf;
+}
+.white {
+  color: white;
+}
+.dark {
+  color: #44576c;
+}

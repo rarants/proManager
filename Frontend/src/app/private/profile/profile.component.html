@@ -1,0 +1,74 @@
+<h1 class="text-white center title upper mt-4">Meu perfil</h1>
+<p class="text-white center m-4">
+  Este é o seu perfil de usuário. Aqui você pode verificar seus dados cadastrais
+  e atualizá-los.
+</p>
+<div class="row content m-4">
+  <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+    <div class="card card-content">
+      <div class="card-header">
+        Editar e-mail
+        <fa-icon
+          [icon]="faLock"
+          class="text-secondary"
+          style="float: right"
+        ></fa-icon>
+      </div>
+      <div class="card-body">
+        <form class="form-style">
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email*</label>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              placeholder="Digite seu email"
+            />
+          </div>
+          <div class="center">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="card card-content">
+      <div class="card-header">
+        Alterar senha
+        <fa-icon
+          [icon]="faLock"
+          class="text-secondary"
+          style="float: right"
+        ></fa-icon>
+      </div>
+      <div class="card-body">
+        <form class="form-style">
+          <div class="mb-3">
+            <label for="inputPassword" class="form-label">Senha atual*</label>
+            <input
+              type="password"
+              class="form-control"
+              id="inputPassword"
+              placeholder="Digite sua senha"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="inputConfirmation" class="form-label"
+              >Nova senha*</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="inputConfirmation"
+              placeholder="Digite sua senha"
+            />
+          </div>
+          <div class="center">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" ng-app="">
+  <div class="container-fluid">
+    <div class="col header">
+      <img
+        width="300"
+        alt="Angular Logo"
+        style="max-width: 2rem"
+        src="assets/icon.svg"
+      />
+      <a class="navbar-brand title" href="#">ProManager</a>
+    </div>
+    <div class="col right">
+      <button
+        (click)="setShowModal('login')"
+        type="button"
+        class="btn btn-outline-light"
+      >
+        Login
+      </button>
+      <button
+        (click)="setShowModal('cadastro')"
+        type="button"
+        class="btn btn-outline-light"
+      >
+        Cadastro
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="modal fade" tabindex="-1" #modalShow id="modalShow">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title">{{ modal.type }}</p>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="navbar-brand" *ngIf="modal.type === 'login'">
+          <div class="center">
+            <img
+              alt="Angular Logo"
+              style="max-width: 8rem"
+              src="assets/icon.svg"
+            />
+          </div>
+          <form class="form-style">
+            <div class="mb-3">
+              <label for="loginInputEmail" class="form-label">Email*</label>
+              <input
+                type="email"
+                class="form-control"
+                id="loginInputEmail"
+                placeholder="Digite seu email"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="loginInputPassword" class="form-label">Senha*</label>
+              <input
+                type="password"
+                class="form-control"
+                id="loginInputPassword"
+                placeholder="Digite sua senha"
+              />
+            </div>
+            <div class="center">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                routerLink="/user/boards"
+              >
+                Entrar
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="navbar-brand" *ngIf="modal.type === 'cadastro'">
+          <div class="center">
+            <img
+              alt="Angular Logo"
+              style="max-width: 8rem"
+              src="assets/icon.svg"
+            />
+          </div>
+          <form class="form-style">
+            <div class="mb-3">
+              <label for="registerInputNome" class="form-label">Nome*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="registerInputNome"
+                placeholder="Digite seu nome"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="registerInputEmail" class="form-label">Email*</label>
+              <input
+                type="email"
+                class="form-control"
+                id="registerInputEmail"
+                placeholder="Digite seu email"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="registerInputPassword" class="form-label"
+                >Senha*</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="registerInputPassword"
+                placeholder="Digite sua senha"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="registerInputConfirmation" class="form-label"
+                >Confirmação de senha*</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="registerInputConfirmation"
+                placeholder="Confirme sua senha"
+              />
+            </div>
+            <div class="center">
+              <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

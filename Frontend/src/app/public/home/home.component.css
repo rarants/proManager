@@ -1,0 +1,92 @@
+hr {
+    margin-inline: 40px;
+}
+hr, .description {
+    color: #85A3CF;
+}
+img {
+    opacity: .7;
+    transition: .5s;
+}
+img:hover {
+    opacity: 1;
+    transition: .5s;
+    transform: translateY(-6px);
+}
+
+.content {
+    margin: 0px .5rem .5rem .5rem;
+}
+
+/* Properties */
+.pointer {
+    cursor: pointer;
+}
+.ml-4 {
+    margin-left: 40px;
+}
+.start {
+    margin-top: 80px;
+}
+.title { 
+    text-transform: capitalize;
+    margin-top: 10px;
+}
+
+/* White section */
+.white-section {
+    background: rgb(144,144,144);
+    background: linear-gradient(357deg, rgba(144,144,144,1) 0%, rgba(255,255,255,1) 100%);
+    color: #44576C;
+}
+.white-section .in {
+    padding: 40px;
+    padding-inline: 10%;
+}
+
+/* Cards */
+.card-custom {
+    padding: 60px 20px 0px 20px;
+    margin-bottom: 20px;
+    transition: .5s;
+}
+.card-custom:hover {
+    transition: .5s;
+    transform: translateY(-6px);
+}
+.card-custom-2 {
+    padding: 15px 20px 15px 20px;
+    margin-bottom: 20px;
+    transition: .5s;
+}
+.card-custom-2:hover {
+    transition: .5s;
+    transform: translateY(-6px);
+}
+
+/* Icons */
+.icon-projects {
+    background: url("../../../assets/projects.svg") no-repeat 95% 95%;
+    background-position: right 3rem;
+    background-size: 40px;
+}
+.icon-cols {
+    background: url("../../../assets/cols.svg") no-repeat 95% 95%;
+    background-position: right 3rem;
+    background-size: 50px;
+}
+.icon-tasks {
+    background: url("../../../assets/tasks.svg") no-repeat 95% 95%;
+    background-position: right 3rem;
+    background-size: 40px;
+}
+.icon-deadline {
+    background: url("../../../assets/clock.svg") no-repeat 95% 95%;
+    background-position: right 3rem;
+    background-size: 40px;
+}
+.icon-tags {
+    background: url("../../../assets/tags.svg") no-repeat 95% 95%;
+    background-position: right 3rem;
+    background-size: 50px;
+}

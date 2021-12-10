@@ -1,0 +1,28 @@
+<h1 class="text-white center title upper">Meus quadros</h1>
+<p class="text-white center m-4">
+  Aqui você pode conferir a lista completa de quadros que você adicionou no
+  sistema. Clique no cartão para poder editá-lo.
+</p>
+
+<div class="row content">
+  <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let board of boardList">
+    <div class="card" [routerLink]="['/user/boards', board.id, 'view']">
+      <div class="row">
+        <div class="col h4">
+          {{ board.title }}
+        </div>
+        <div class="col align-right">
+          <a class="links-style white">
+            <fa-icon [icon]="faAngleRight" class="text-dark"></fa-icon>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <hr class="my-2" />
+        <div class="col">
+          {{ board.description }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

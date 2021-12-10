@@ -1,0 +1,1 @@
+// inline cria um arquivo só (html, js e css tudo junto)

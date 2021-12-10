@@ -1,0 +1,57 @@
+.content {
+    margin: 40px;
+}
+.card {
+    margin-bottom: 20px;
+}
+.title {
+    margin-top: 40px;
+}
+.upper {
+    text-transform: uppercase;
+}
+.align-right {
+    text-align: right;
+}
+
+/* links */
+.links-style {
+    text-decoration: none;
+    opacity: 0.8;
+    transition: 0.8s;
+}
+.links-style:hover {
+  text-decoration: none;
+  opacity: 1;
+  transition: 0.8s;
+}
+
+/* colors */
+.primary {
+  color: #85a3cf;
+}
+.white {
+  color: white;
+}
+.dark {
+  color: #44576c;
+}
+
+.col-item {
+    max-width: 17rem;
+}
+
+.new-card {
+    opacity: 0.8;
+    transition: 0.8s;
+}
+.new-card:hover {
+    opacity: 1;
+    transition: 0.8s;
+    background-color: rgb(211, 211, 218);
+}
+
+a {
+    text-decoration: none;
+    color: #0dcaf0;
+}

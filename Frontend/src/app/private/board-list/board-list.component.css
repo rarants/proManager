@@ -1,0 +1,42 @@
+.content {
+    margin: 40px;
+}
+.card {
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: .5s;
+}
+.card:hover {
+    transition: .5s;
+    transform: translateY(-6px);
+    cursor: pointer;
+}
+.title {
+    margin-top: 40px;
+    text-transform: uppercase;
+}
+.align-right {
+    text-align: right;
+}
+
+/* links */
+.links-style {
+    text-decoration: none;
+    opacity: 0.8;
+    transition: 0.8s;
+}
+.links-style:hover {
+  text-decoration: none;
+  opacity: 1;
+  transition: 0.8s;
+}
+.primary {
+  color: #85a3cf;
+}
+.white {
+  color: white;
+}
+.dark {
+  color: #44576c;
+}
+  
