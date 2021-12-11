@@ -39,7 +39,21 @@
           <div class="col col-item" *ngFor="let col of board.collumns">
             <div class="card">
               <div class="card-header h6">
-                {{ col.title }}
+                <div class="row">
+                  <div class="col mt-2 h5">
+                    {{ col.title }}
+                  </div>
+                  <div class="col" style="text-align: right">
+                    <button
+                      id="setShowMenu"
+                      class="btn btn-info btn-sm text-light p-2 px-3"
+                      style="font-weight: 500"
+                      title="Editar coluna"
+                    >
+                      <fa-icon [icon]="faEdit" class="fa-1x icon"></fa-icon>
+                    </button>
+                  </div>
+                </div>
               </div>
               <div class="card-body">
                 <div class="col-item" *ngFor="let task of col.tasks">
@@ -72,7 +86,7 @@
             </div>
           </div>
           <div class="col col-item">
-            <div class="card p-4 new-card pointer" (click)="setShowModalTask()">
+            <div class="card p-4 new-card pointer" (click)="setShowModalCol()">
               <div class="row">
                 <div class="col-10">Adicionar nova coluna</div>
                 <div class="col-2 mt-2">
@@ -88,10 +102,9 @@
 </div>
 
 <div class="modal fade" tabindex="-1" #modalTask id="modalTask">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <p class="modal-title">Gerenciar Tarefas</p>
         <button
           type="button"
           class="btn-close"
@@ -99,7 +112,88 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">body</div>
+      <div class="modal-body m-4">
+        <h1 class="center">Gerenciar cartão</h1>
+        <div class="form-style">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="registerInputTitle" class="form-label"
+                  >Título*</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registerInputTitle"
+                  placeholder="Digite o título do cartão"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mb-3">
+                <label for="registerInputStartAt" class="form-label"
+                  >Data de início</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="registerInputStartAt"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mb-3">
+                <label for="registerInputEndAt" class="form-label"
+                  >Data de término</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="registerInputEndAt"
+                />
+              </div>
+            </div>
+            <div class="col-12 mb-3">
+              <label for="registerInputDescription" class="form-label"
+                >Etiquetas</label
+              >
+              <div class="row">
+                <div class="col-4" *ngFor="let tag of board.tags">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="tag.id"
+                      id="{{tag.title}}"
+                    />
+                    <label class="form-check-label" for="{{tag.title}}">
+                      <div [ngClass]="'m-0 p-1 alert alert-' + tag.color" role="alert">
+                        {{ tag.title }}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="registerInputDescription" class="form-label"
+                  >Descrição</label
+                >
+                <textarea
+                  class="form-control"
+                  placeholder="Adicione uma descrição"
+                  id="registerInputDesc"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="center">
+            <button class="btn btn-info white">Adicionar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -115,7 +209,22 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">body</div>
+      <div class="modal-body">
+        <div class="form-style">
+          <div class="mb-3">
+            <label for="registerInputTitle" class="form-label">Título*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="registerInputTitle"
+              placeholder="Digite o título da coluna"
+            />
+          </div>
+          <div class="center">
+            <button class="btn btn-info white">Adicionar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

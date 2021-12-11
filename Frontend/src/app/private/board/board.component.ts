@@ -46,6 +46,38 @@ export class BoardComponent {
         title: "Completed",
         tasks: []
       }
+    ],
+    tags: [
+      {
+        id: 1,
+        title: "primary",
+        color: "primary"
+      },
+      {
+        id: 2,
+        title: "dark",
+        color: "dark"
+      },
+      {
+        id: 3,
+        title: "info",
+        color: "info"
+      },
+      {
+        id: 4,
+        title: "danger",
+        color: "danger"
+      },
+      {
+        id: 5,
+        title: "warning",
+        color: "warning"
+      },
+      {
+        id: 6,
+        title: "success",
+        color: "success"
+      }
     ]
   }
   setShowModalTask() { 
