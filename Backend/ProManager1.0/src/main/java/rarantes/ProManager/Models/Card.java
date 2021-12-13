@@ -1,6 +1,7 @@
 package rarantes.ProManager.Models;
 
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -19,13 +22,14 @@ public class Card {
 	@ApiModelProperty(notes = "Auto_increment id of board", name = "id", required = true)
 	private Long id;
 
-	@ManyToOne
+	/*@ManyToOne
 	@ApiModelProperty(notes = "Card's owner", name = "owner", required = true)
 	private User owner;
+	 */
 
-	@ManyToOne
-	@ApiModelProperty(notes = "Card's responsible", name = "responsible", required = true)
-	private User responsible;
+	@OneToOne
+	@ApiModelProperty(notes = "Collumn that card is related", name = "collumn_card", required = true)
+	private Collumn collumn;
 	
 	@Column(nullable = false)
 	@ApiModelProperty(notes = "Card's title", name = "title", required = true)
@@ -43,6 +47,11 @@ public class Card {
 	@ApiModelProperty(notes = "Card's end date", name = "end_date")
 	private Date end_date;
 
+	@OneToMany
+	@ApiModelProperty(notes = "Card's tags", name = "card_tags", required = true)
+	private Set<CardTags> card_tags;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -51,21 +60,13 @@ public class Card {
 		this.id = id;
 	}
 
-	public User getOwner() {
+	/*public User getOwner() {
 		return owner;
 	}
 
 	public void setOwner(User owner) {
 		this.owner = owner;
-	}
-
-	public User getResponsible() {
-		return responsible;
-	}
-
-	public void setResponsible(User responsible) {
-		this.responsible = responsible;
-	}
+	}*/
 
 	public String getTitle() {
 		return title;

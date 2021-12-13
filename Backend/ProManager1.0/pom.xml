@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>rarants</groupId>
-    <artifactId>SpringAPI</artifactId>
+    <artifactId>ProManager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpringAPI2</name>
-    <description>Aula de RestAPI</description>
+    <name>ProManager API</name>
+    <description>ProManager</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -37,6 +37,7 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import rarantes.ProManager.Models.Collumn;
 import rarantes.ProManager.Repositories.CollumnRepository;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/collumn")
 public class CollumnController {
@@ -34,11 +36,11 @@ public class CollumnController {
     }
     
     /* show route */
-    @GetMapping("/{id}")
+    @GetMapping("/board/{id}")
     @ApiOperation(value = "Show collumn by id", response = Iterable.class)
-    public Optional<Collumn> show(@PathVariable Long id) {
+    public List<Collumn> show(@PathVariable Long id) {
         try {
-            return collumnRepository.findById(id);
+            return collumnRepository.findByBoardId(id);
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -49,6 +51,8 @@ public class CollumnController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create new collumn", response = Iterable.class)
     public Collumn post(@RequestBody Collumn collumn) {
+    	System.out.println("Post");
+    	System.out.println(collumn.toString());
         return collumnRepository.save(collumn);
     }
 	

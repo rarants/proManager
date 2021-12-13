@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import rarantes.ProManager.Models.Board;
 import rarantes.ProManager.Repositories.BoardRepository;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/board")
 public class BoardController {
@@ -57,6 +59,7 @@ public class BoardController {
     public Board put(@RequestBody Board board, @PathVariable Long id) {
     	Board brd = boardRepository.getOne(id);
     	brd.setTitle(board.getTitle());
+    	brd.setDescription(board.getDescription());
         return boardRepository.save(brd);
     }
 	

@@ -2,9 +2,9 @@ package rarantes.ProManager.Repositories;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
-import rarantes.ProManager.Models.Teammate;
+import rarantes.ProManager.Models.Board;
 
 @Repository
-public interface TeammateRepository extends JpaRepository<Teammate, Long>{
-
+public interface BoardRepository extends JpaRepository<Board, Long>{
+	
 }
