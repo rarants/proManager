@@ -17,7 +17,7 @@
 </p>
 <div class="row content">
   <div class="col-12">
-    <div class="card" [routerLink]="['/user/boards/view']">
+    <div class="card">
       <div class="card-header">
         <div class="row">
           <div class="col mt-2 h5">
@@ -28,8 +28,10 @@
               id="setShowMenu"
               class="btn btn-info btn-sm text-light p-2 px-3"
               style="font-weight: 500"
+              (click)="setShowModalBoard()"
             >
-              <fa-icon [icon]="faEdit" class="fa-1x icon"></fa-icon> Editar
+              <fa-icon [icon]="faEdit" class="fa-1x icon"></fa-icon>
+              Editar
             </button>
           </div>
         </div>
@@ -49,6 +51,7 @@
                       class="btn btn-info btn-sm text-light p-2 px-3"
                       style="font-weight: 500"
                       title="Editar coluna"
+                      (click)="handleOpenColumnModal(col)"
                     >
                       <fa-icon [icon]="faEdit" class="fa-1x icon"></fa-icon>
                     </button>
@@ -56,16 +59,16 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="col-item" *ngFor="let task of col.tasks">
+                <div class="col-item" *ngFor="let card of col.cards">
                   <div class="card p-4 pointer new-card">
-                    <h3 style="font-weight: 500">{{ task.title }}</h3>
-                    {{ task.description }}
+                    <h3 style="font-weight: 500">{{ card.title }}</h3>
+                    {{ card.description }}
                   </div>
                 </div>
                 <div
                   class="alert alert-info"
                   role="alert"
-                  *ngIf="col.tasks?.length === 0"
+                  *ngIf="col.cards?.length === 0"
                 >
                   Não há cartões adicionados até o momento.
                 </div>
@@ -73,7 +76,7 @@
                 <hr />
                 <div
                   class="card p-4 new-card pointer"
-                  (click)="setShowModalTask()"
+                  (click)="setShowModalCard()"
                 >
                   <div class="row">
                     <div class="col-10">Adicionar novo cartão</div>
@@ -101,7 +104,7 @@
   </div>
 </div>
 
-<div class="modal fade" tabindex="-1" #modalTask id="modalTask">
+<div class="modal fade" tabindex="-1" #modalCard id="modalCard">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -158,16 +161,19 @@
                 >Etiquetas</label
               >
               <div class="row">
-                <div class="col-4" *ngFor="let tag of board.tags">
+                <div class="col-4" *ngFor="let tag of tags">
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="checkbox"
                       value="tag.id"
-                      id="{{tag.title}}"
+                      id="{{ tag.title }}"
                     />
-                    <label class="form-check-label" for="{{tag.title}}">
-                      <div [ngClass]="'m-0 p-1 alert alert-' + tag.color" role="alert">
+                    <label class="form-check-label" for="{{ tag.title }}">
+                      <div
+                        [ngClass]="'m-0 p-1 alert alert-' + tag.color"
+                        role="alert"
+                      >
                         {{ tag.title }}
                       </div>
                     </label>
@@ -207,6 +213,8 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          id="closeColButton"
+          (click)="modalComponent?.hide(); isEditing = false; this.cleanModelCol();"
         ></button>
       </div>
       <div class="modal-body">
@@ -218,10 +226,66 @@
               class="form-control"
               id="registerInputTitle"
               placeholder="Digite o título da coluna"
+              [(ngModel)]="collumnModel.title"
             />
           </div>
           <div class="center">
-            <button class="btn btn-info white">Adicionar</button>
+            <button
+              class="btn btn-info white"
+              (click)="handleSubmitNewCollumn()"
+            >
+              <span *ngIf="isEditing">Salvar</span>
+              <span *ngIf="!isEditing">Adicionar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" #modalBoard id="modalBoard">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title">Gerenciar Quadro</p>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="closeBoardButton"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-style">
+          <div class="mb-3">
+            <div class="mb-3">
+              <label for="registerInputTitle" class="form-label">Título*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="registerInputTitle"
+                placeholder="Digite o título do quadro"
+                [(ngModel)]="board.title"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="registerInputDesc" class="form-label"
+                >Descrição</label
+              >
+              <textarea
+                class="form-control"
+                placeholder="Adicione uma descrição"
+                id="registerInputDesc"
+                rows="3"
+                [(ngModel)]="board.description"
+              ></textarea>
+            </div>
+            <div class="center">
+              <button class="btn btn-info white" (click)="handleUpdateBoard()">
+                Salvar alterações
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -18,6 +18,13 @@
 .align-right {
     text-align: right;
 }
+.btn {
+    transition: .5s;
+}
+.btn:hover {
+    transition: .5s;
+    transform: translateY(-3px);
+}
 
 /* links */
 .links-style {
@@ -30,6 +37,8 @@
   opacity: 1;
   transition: 0.8s;
 }
+
+/* colors */
 .primary {
   color: #85a3cf;
 }
@@ -40,3 +49,8 @@
   color: #44576c;
 }
   
+.alert {
+  margin: auto;
+  width: 40%;
+  padding: 10px;
+}

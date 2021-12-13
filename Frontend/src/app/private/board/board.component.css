@@ -13,13 +13,13 @@
 .align-right {
     text-align: right;
 }
-.btn {
+/* .btn {
     transition: .5s;
 }
 .btn:hover {
     transition: .5s;
     transform: translateY(-3px);
-}
+} */
 
 /* links */
 .links-style {

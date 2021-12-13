@@ -14,7 +14,6 @@ import { Modal } from 'bootstrap';
 export class SidebarComponent {
   modalComponent: Modal | undefined;
   displayMenuSmallDevice = false;
-  modal = false;
 
   faSignOutAlt = faSignOutAlt;
   faHome = faHome;
@@ -22,7 +21,6 @@ export class SidebarComponent {
   faBars = faBars;
 
   setShowModal() { 
-    this.modal = true;
     var modal = document.getElementById("modalShow");
     this.modalComponent = new bootstrap.Modal(modal || "{}");
     this.modalComponent.show();

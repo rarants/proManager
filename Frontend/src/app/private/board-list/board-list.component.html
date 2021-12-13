@@ -3,9 +3,21 @@
   Aqui você pode conferir a lista completa de quadros que você adicionou no
   sistema. Clique no cartão para poder editá-lo.
 </p>
-
+<div class="center m-4">
+  <button
+    id="setShowMenu"
+    class="btn btn-info btn-sm text-light p-2 px-3"
+    style="font-weight: 500"
+    (click)="setShowModalCard()"
+  >
+    <fa-icon [icon]="faPlus" class="fa-1x icon"></fa-icon> Novo quadro
+  </button>
+</div>
+<div class="alert alert-info center" role="alert" *ngShow="empty">
+  Não foram cadastrados quadros até o momento
+</div>
 <div class="row content">
-  <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let board of boardList">
+  <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let board of boards">
     <div class="card" [routerLink]="['/user/boards', board.id, 'view']">
       <div class="row">
         <div class="col h4">
@@ -21,6 +33,52 @@
         <hr class="my-2" />
         <div class="col">
           {{ board.description }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" #modalBoard id="modalBoard">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title">Novo quadro</p>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="closeButton"
+          (click)="modalComponent?.hide()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-style">
+          <div class="mb-3">
+            <label for="registerInputTitle" class="form-label">Título*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="registerInputTitle"
+              placeholder="Digite o título do quadro"
+              [(ngModel)]="model.title"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="registerInputDesc" class="form-label">Descrição</label>
+            <textarea
+              class="form-control"
+              placeholder="Adicione uma descrição"
+              id="registerInputDesc"
+              rows="3"
+              [(ngModel)]="model.description"
+            ></textarea>
+          </div>
+          <div class="center">
+            <button class="btn btn-info white" (click)="handleSubmitNewBoard()">
+              Adicionar
+            </button>
+          </div>
         </div>
       </div>
     </div>
