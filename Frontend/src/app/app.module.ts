@@ -18,6 +18,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { FormsModule } from '@angular/forms';
     MatSidenavModule,
     DragDropModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

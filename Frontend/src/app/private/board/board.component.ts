@@ -10,6 +10,7 @@ import { Board } from "../interfaces/board";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { CollumnsService } from "../services/collumns.service";
 import { Collumn } from "../interfaces/collumn";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-board",
@@ -73,7 +74,8 @@ export class BoardComponent implements OnInit {
     private route: ActivatedRoute,
     private boardsService: BoardsService,
     private collumnsService: CollumnsService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -121,7 +123,7 @@ export class BoardComponent implements OnInit {
     });
   }
   handleSubmitNewCollumn() {
-    if (!this.isEditing){
+    if (!this.isEditing) {
       try {
         this.collumnModel.board.id = this.board.id;
         this.collumnsService.postCollumn(this.collumnModel).subscribe(
@@ -132,9 +134,12 @@ export class BoardComponent implements OnInit {
             this.error = error;
           }
         );
+        this.toastr.success("Coluna adicionada com sucesso");
         this.setHideModalCol();
       } catch (e) {
-        console.log(e);
+        this.toastr.error(
+          "Ocorreu um erro ao cadastrar a coluna. Verifique as informações e tente novamente"
+        );
       }
     } else {
       this.handleUpdateColumn();
@@ -146,9 +151,12 @@ export class BoardComponent implements OnInit {
         this.board.title = response.title;
         this.board.description = response.description;
       });
+      this.toastr.success("Quadro atualizado com sucesso");
       this.setHideModalBoard();
     } catch (e) {
-      console.log(e);
+      this.toastr.error(
+        "Ocorreu um erro ao salvar as informações. Verifique as informações e tente novamente"
+      );
     }
   }
   handleOpenColumnModal(column: any) {
@@ -161,13 +169,18 @@ export class BoardComponent implements OnInit {
   handleUpdateColumn() {
     this.isEditing = false;
     try {
-      this.collumnsService.updateCollumn(this.collumnModel).subscribe((response) => {
-        this.collumnModel.title = response.title;
-      });
+      this.collumnsService
+        .updateCollumn(this.collumnModel)
+        .subscribe((response) => {
+          this.collumnModel.title = response.title;
+        });
+      this.toastr.success("Alterações salvas com sucesso");
       this.getBoardInfo(this.board_id);
       this.setHideModalCol();
     } catch (e) {
-      console.log(e);
+      this.toastr.error(
+        "Ocorreu um erro ao atualizar a coluna. Verifique as informações e tente novamente"
+      );
     }
   }
   cleanModelCol() {
