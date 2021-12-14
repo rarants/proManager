@@ -1,5 +1,6 @@
 export interface Collumn {
     id: Number,
     title: String,
-    board: any
+    board: any,
+    cards: any
 }

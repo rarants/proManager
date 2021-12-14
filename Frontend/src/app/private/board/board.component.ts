@@ -11,6 +11,8 @@ import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { CollumnsService } from "../services/collumns.service";
 import { Collumn } from "../interfaces/collumn";
 import { ToastrService } from "ngx-toastr";
+import { Card } from "../interfaces/card";
+import { CardsService } from "../services/cards.service";
 
 @Component({
   selector: "app-board",
@@ -32,7 +34,19 @@ export class BoardComponent implements OnInit {
     board: {
       id: 0,
     },
+    cards: []
   };
+
+  cardModel: Card = {
+    id: 0,
+    title: "",
+    description: "",
+    start_date: null,
+    end_date: null,
+    collumn: {
+      id: 0
+    }
+  }
 
   tags = [
     {
@@ -74,6 +88,7 @@ export class BoardComponent implements OnInit {
     private route: ActivatedRoute,
     private boardsService: BoardsService,
     private collumnsService: CollumnsService,
+    private cardService: CardsService,
     private router: Router,
     private toastr: ToastrService
   ) {}
@@ -106,6 +121,18 @@ export class BoardComponent implements OnInit {
     var modal = document.getElementById("closeBoardButton");
     modal?.click();
   }
+  handleOpenColumnModal(column: any) {
+    this.isEditing = true;
+    this.collumnModel.id = column.id;
+    this.collumnModel.title = column.title;
+    this.collumnModel.board.id = this.board.id;
+    this.setShowModalCol();
+  }
+  handleOpenCardModal(collumn: Collumn) {
+    this.cardModel.collumn.id = collumn;
+    this.setShowModalCard();
+  }
+
   getBoardInfo(id: Number) {
     this.boardsService.getBoard(id).subscribe(
       (response) => {
@@ -142,7 +169,32 @@ export class BoardComponent implements OnInit {
         );
       }
     } else {
-      this.handleUpdateColumn();
+      this.handleUpdateCollumn();
+    }
+  }
+  handleSubmitNewCard() {
+    try {
+      console.log(this.cardModel)
+      this.cardService.postCard(this.cardModel).subscribe(
+        (response) => {
+          /* this.board.collumns.map((e: { id: any; cards: any[]; }) => {
+            if (e.id === this.cardModel.collumn.id) {
+              e.cards.push(response);
+            }
+          }); */
+          //this.board.collumns.push(response);
+          console.log(this.board);
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
+      this.toastr.success("Cartão adicionado com sucesso");
+      // this.setHideModalCol();
+    } catch (e) {
+      this.toastr.error(
+        "Ocorreu um erro ao cadastrar o cartão. Verifique as informações e tente novamente"
+      );
     }
   }
   handleUpdateBoard() {
@@ -159,14 +211,7 @@ export class BoardComponent implements OnInit {
       );
     }
   }
-  handleOpenColumnModal(column: any) {
-    this.isEditing = true;
-    this.collumnModel.id = column.id;
-    this.collumnModel.title = column.title;
-    this.collumnModel.board.id = this.board.id;
-    this.setShowModalCol();
-  }
-  handleUpdateColumn() {
+  handleUpdateCollumn() {
     this.isEditing = false;
     try {
       this.collumnsService
@@ -183,6 +228,7 @@ export class BoardComponent implements OnInit {
       );
     }
   }
+
   cleanModelCol() {
     this.collumnModel.id = 0;
     this.collumnModel.title = "";

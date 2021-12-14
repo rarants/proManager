@@ -21,7 +21,7 @@ export class CollumnsService {
 
   public updateCollumn(collumn: Collumn): Observable<any> {
     return this.http
-      .put<Collumn>(`http://localhost:8080/collumn/${collumn.board.id}`, collumn)
+      .put<Collumn>(`http://localhost:8080/collumn/${collumn.id}`, collumn)
       .pipe(first());
   }
 }
