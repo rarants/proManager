@@ -4,6 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { BoardsService } from "../services/boards.service";
 
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import * as bootstrap from "bootstrap";
 import { Modal } from "bootstrap";
 import { Board } from "../interfaces/board";
@@ -46,9 +47,10 @@ export class BoardComponent implements OnInit {
     column: {
       id: 0,
     },
+    order: 0
   };
 
-  tags = [
+/*   tags = [
     {
       id: 1,
       title: "primary",
@@ -79,7 +81,7 @@ export class BoardComponent implements OnInit {
       title: "success",
       color: "success",
     },
-  ];
+  ]; */
 
   board!: Board;
   error = "";
@@ -145,6 +147,7 @@ export class BoardComponent implements OnInit {
       this.cardModel.description = card.description;
       this.cardModel.start_date = card.start_date;
       this.cardModel.end_date = card.end_date;
+      this.cardModel.order = card.order;
     }
     this.setShowModalCard();
   }
@@ -153,6 +156,18 @@ export class BoardComponent implements OnInit {
     this.boardsService.getBoard(id).subscribe(
       (response) => {
         this.board = response;
+        console.log(this.board)
+        if (this.board.columns) {
+          this.board.columns.forEach((col) => {
+            if (col.cards) {
+              col.cards.sort((card1: Card, card2: Card) => {
+                if (card1.order < card2.order) return -1;
+                if (card1.order > card2.order) return 1;
+                else return 0;
+              })
+            }
+          })
+        }
       },
       (error) => {
         this.error = error;
@@ -192,7 +207,23 @@ export class BoardComponent implements OnInit {
     }
   }
   handleSubmitNewCard() {
+    if (this.board) {
+      this.orderCards();
+      var index = 1;
+      const column_id = this.cardModel.column.id;
+      const column = this.board.columns.find((col: Column) => {
+        return col.id === column_id;
+      })
+      column?.cards.forEach((card: { order: number; }) => {
+        if (card.order > index) index = card.order;
+        if (card.order === index) index += 1;
+      });
+      if (!index) index = 1;
+      this.cardModel.order = index;
+      console.log(this.cardModel)
+    }
     try {
+      console.log(this.cardModel)
       this.cardsService.postCard(this.cardModel).subscribe(
         (response) => {
           this.board.columns.map((e: { id: any; cards: any[] }) => {
@@ -260,6 +291,21 @@ export class BoardComponent implements OnInit {
       );
     }
   }
+  handleUpdateCardOrder() {
+    this.isEditing = false;
+    try {
+      this.board.columns.forEach((col) => {
+        this.cardsService.updateCardOrder(col.id, col.cards).subscribe();
+        this.toastr.success("Alterações salvas com sucesso");
+        this.getBoardInfo(this.board_id);
+        this.setHideModal();
+      })
+    } catch (e) {
+      this.toastr.error(
+        "Ocorreu um erro ao atualizar o cartão. Verifique as informações e tente novamente"
+      );
+    }
+  }
 
   cleanModelCol() {
     this.columnModel.id = 0;
@@ -307,5 +353,44 @@ export class BoardComponent implements OnInit {
     } catch (e) {
       this.toastr.error("Ocorreu um erro ao remover o quadro.");
     }
+  }
+  formatedDate(stringDate: string) {
+    const date = new Date(stringDate);
+    const formatedDate = date.toLocaleDateString("pt-BR", { timeZone: "UTC" });
+    return formatedDate;
+  }
+  getDeadlineStatus(stringDate: string) {
+    var date = new Date(stringDate);
+    const today = new Date();
+    date = new Date(date.setDate(date.getDate() + 1));
+
+    if (date > today && new Date(today.setDate(today.getDate() + 3)) >= date)
+      return "warning";
+    if (date < today) return "danger";
+    if (date >= today) return "success";
+    return "success";
+  }
+  drop(event: CdkDragDrop<string[]>){
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+    this.orderCards();
+    // this.handleUpdateCardOrder();
+  }
+  orderCards() {
+    this.board.columns.forEach((col) => {
+      var order = 1;
+      col.cards.forEach((card: Card) => {
+        card.order = order;
+        order++;
+      })
+    })
   }
 }

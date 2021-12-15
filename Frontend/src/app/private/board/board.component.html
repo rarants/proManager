@@ -7,7 +7,8 @@
 <p class="text-white center m-4">
   Este é o seu quadro {{ board.title }}. Aqui você pode editá-lo de acordo com
   as suas necessidades. Gerencie suas tarefas e organize-as em colunas e
-  cartões. Você também pode definir etiquetas para facilitar a visualização.
+  cartões.
+  <!-- Você também pode definir etiquetas para facilitar a visualização. -->
 </p>
 <p class="text-info m-4 pointer">
   <a routerLink="/user/boards"
@@ -37,6 +38,7 @@
         </div>
       </div>
       <div class="card-body">
+        <!-- <div cdkDropListGroup class="row"> -->
         <div class="row">
           <div class="col col-item" *ngFor="let col of board.columns">
             <div class="card">
@@ -58,7 +60,21 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body">
+              <!-- <div
+                cdkDropList
+                [cdkDropListData]="col.cards"
+                (cdkDropListDropped)="drop($event)"
+                class="card-body"
+              >
+                <div
+                  cdkDrag
+                  class="col-item"
+                  *ngFor="let card of col.cards"
+                  (click)="handleOpenCardModal(col, card)"
+                > -->
+              <div
+                class="card-body"
+              >
                 <div
                   class="col-item"
                   *ngFor="let card of col.cards"
@@ -66,7 +82,14 @@
                 >
                   <div class="card p-4 pointer new-card">
                     <h3 style="font-weight: 500">{{ card.title }}</h3>
-                    {{ card.description }}
+                    <span
+                      *ngIf="card.end_date !== ''"
+                      [ngClass]="
+                        'color-none w-50 m-0 p-0 alert alert-' +
+                        getDeadlineStatus(card.end_date)
+                      "
+                      >deadline
+                    </span>
                   </div>
                 </div>
                 <div
@@ -163,31 +186,33 @@
                 />
               </div>
             </div>
-            <div class="col-12 mb-3">
-              <label for="registerInputDescription" class="form-label"
-                >Etiquetas</label
-              >
-              <div class="row">
-                <div class="col-4" *ngFor="let tag of tags">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="tag.id"
-                      id="{{ tag.title }}"
-                    />
-                    <label class="form-check-label" for="{{ tag.title }}">
-                      <div
-                        [ngClass]="'m-0 p-1 alert alert-' + tag.color"
-                        role="alert"
-                      >
-                        {{ tag.title }}
-                      </div>
-                    </label>
+            <!--  Tags
+              <div class="col-12 mb-3">
+                <label for="registerInputDescription" class="form-label"
+                  >Etiquetas</label
+                >
+                <div class="row">
+                  <div class="col-4" *ngFor="let tag of tags">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="tag.id"
+                        id="{{ tag.title }}"
+                      />
+                      <label class="form-check-label" for="{{ tag.title }}">
+                        <div
+                          [ngClass]="'color-none m-0 p-1 alert alert-' + tag.color"
+                          role="alert"
+                        >
+                          {{ tag.title }}
+                        </div>
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div> 
+            -->
             <div class="col-12">
               <div class="mb-3">
                 <label for="registerInputDescription" class="form-label"
@@ -257,10 +282,7 @@
             >
               Remover
             </button>
-            <button
-              class="btn btn-info white"
-              (click)="handleSubmitColumn()"
-            >
+            <button class="btn btn-info white" (click)="handleSubmitColumn()">
               <span *ngIf="isEditing">Salvar</span>
               <span *ngIf="!isEditing">Adicionar</span>
             </button>

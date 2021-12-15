@@ -30,4 +30,11 @@ export class CardsService {
       .delete<Card>(`http://localhost:8080/card/${card_id}`)
       .pipe(first());
   }
+
+  public updateCardOrder(column_id: Number, card_list: Card[]): Observable<any> {
+    return this.http
+      .put<Card[]>(`http://localhost:8080/card/column/${column_id}/order`, card_list)
+      .pipe(first());
+  }
+
 }

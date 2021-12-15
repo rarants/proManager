@@ -4,5 +4,6 @@ export interface Card {
     description: String,
     start_date: any,
     end_date: any,
-    column: any
+    column: any,
+    order: Number
 }
