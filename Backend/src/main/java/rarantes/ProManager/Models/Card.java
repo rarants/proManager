@@ -1,7 +1,6 @@
 package rarantes.ProManager.Models;
 
 import java.sql.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -27,7 +24,7 @@ public class Card {
 	private User owner;
 	 */
 
-	@OneToOne
+	@ManyToOne
 	@ApiModelProperty(notes = "Collumn that card is related", name = "collumn_card", required = true)
 	private Collumn collumn;
 	
@@ -47,10 +44,10 @@ public class Card {
 	@ApiModelProperty(notes = "Card's end date", name = "end_date")
 	private Date end_date;
 
-	@OneToMany
+	/*@OneToMany
 	@ApiModelProperty(notes = "Card's tags", name = "card_tags", required = true)
-	private Set<CardTags> card_tags;
-	
+	private List<CardTags> card_tags;
+	*/
 	
 	public Long getId() {
 		return id;
@@ -67,13 +64,21 @@ public class Card {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}*/
-
+	
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public Collumn getCollumn() {
+		return collumn;
+	}
+
+	public void setCollumn(Collumn collumn) {
+		this.collumn = collumn;
 	}
 
 	public String getDescription() {
@@ -99,6 +104,7 @@ public class Card {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
+	
 
 	/*@Override
 	public String toString() {

@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import rarantes.ProManager.Models.Board;
 import rarantes.ProManager.Models.Collumn;
+import rarantes.ProManager.Repositories.BoardRepository;
 import rarantes.ProManager.Repositories.CollumnRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,6 +29,9 @@ public class CollumnController {
 
 	@Autowired
 	private CollumnRepository collumnRepository;
+	
+	@Autowired
+	private BoardRepository boardRepository;
 	
 	/* index route */
     @GetMapping
@@ -51,8 +56,8 @@ public class CollumnController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create new collumn", response = Iterable.class)
     public Collumn post(@RequestBody Collumn collumn) {
-    	System.out.println("Post");
-    	System.out.println(collumn.toString());
+    	//System.out.println(collumn.getBoard().getId());
+        //Optional<Board> board = boardRepository.findById(collumn.getBoard().getId());
         return collumnRepository.save(collumn);
     }
 	
@@ -60,8 +65,10 @@ public class CollumnController {
     @PutMapping("/{id}")
     @ApiOperation(value = "Update collumn title", response = Iterable.class)
     public Collumn put(@RequestBody Collumn collumn, @PathVariable Long id) {
+    	
     	Collumn col = collumnRepository.getOne(id);
     	col.setTitle(collumn.getTitle());
+    	
         return collumnRepository.save(col);
     }
 	
