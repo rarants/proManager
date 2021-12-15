@@ -47,6 +47,10 @@ public class Card {
 	@ApiModelProperty(notes = "Card's end date", name = "end_date")
 	private Date end_date;
 
+	@Column
+	@ApiModelProperty(notes = "Card's order in collumn", name = "order")
+	private Integer order;
+
 	/*@OneToMany
 	@ApiModelProperty(notes = "Card's tags", name = "card_tags", required = true)
 	private List<CardTags> card_tags;
@@ -106,6 +110,14 @@ public class Card {
 
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
+	}
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 	
 

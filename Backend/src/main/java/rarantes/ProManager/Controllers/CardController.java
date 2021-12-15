@@ -1,5 +1,6 @@
 package rarantes.ProManager.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,9 +60,25 @@ public class CardController {
     public Card put(@RequestBody Card card, @PathVariable Long id) {
     	Card crd = cardRepository.getOne(id);
     	crd.setTitle(card.getTitle());
+    	crd.setDescription(card.getDescription());
+    	crd.setEnd_date(card.getEnd_date());
+    	crd.setStart_date(card.getStart_date());
         return cardRepository.save(crd);
     }
 	
+    /* update cards order */
+    @PutMapping("/column/{id}/order")
+    @ApiOperation(value = "Update cards order", response = Iterable.class)
+    public void put(@PathVariable ArrayList<Card> card_list) {
+    	System.out.println();
+    	for (Card lcard: card_list) {
+    		if (lcard.getId() != null) {
+    	    	Card crd = cardRepository.getOne(lcard.getId());
+    			crd.setOrder(lcard.getOrder());
+    		}
+    	}
+    }
+    
     /* delete route */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete card", response = Iterable.class)
