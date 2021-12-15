@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import io.swagger.annotations.ApiModelProperty;
 
 
@@ -24,6 +26,7 @@ public class Card {
 	private User owner;
 	 */
 
+	@JsonBackReference
 	@ManyToOne
 	@ApiModelProperty(notes = "Collumn that card is related", name = "collumn_card", required = true)
 	private Collumn collumn;

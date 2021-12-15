@@ -39,7 +39,13 @@ public class Collumn {
 	/*@OneToMany(mappedBy = "collumn", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@ApiModelProperty(notes = "Column's cards", name = "cards", required = true)
 	private List<Card> cards = new ArrayList<Card>();
-*/
+	 */
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "collumn", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@ApiModelProperty(notes = "Column's cards", name = "cards", required = true)
+	private List<Card> cards = new ArrayList<Card>();
+	
 	public Long getId() {
 		return id;
 	}
