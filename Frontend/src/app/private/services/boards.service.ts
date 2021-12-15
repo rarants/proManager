@@ -35,9 +35,9 @@ export class BoardsService {
       .pipe(first());
   }
 
-/*   public deleteBoard(board_id: Number): Observable<any> {
+  public deleteBoard(board_id: Number): Observable<any> {
     return this.http
       .delete<Board>(`http://localhost:8080/board/${board_id}`)
       .pipe(first());
-  } */
+  }
 }

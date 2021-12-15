@@ -59,7 +59,11 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="col-item" *ngFor="let card of col.cards">
+                <div
+                  class="col-item"
+                  *ngFor="let card of col.cards"
+                  (click)="handleOpenCardModal(col, card)"
+                >
                   <div class="card p-4 pointer new-card">
                     <h3 style="font-weight: 500">{{ card.title }}</h3>
                     {{ card.description }}
@@ -76,7 +80,7 @@
                 <hr />
                 <div
                   class="card p-4 new-card pointer"
-                  (click)="handleOpenCardModal(col)"
+                  (click)="handleOpenCardModal(col, null)"
                 >
                   <div class="row">
                     <div class="col-10">Adicionar novo cartão</div>
@@ -200,8 +204,17 @@
             </div>
           </div>
           <div class="center">
-            <button class="btn btn-info white" (click)="handleSubmitNewCard()"
-            >Adicionar</button>
+            <button
+              class="btn btn-danger white margin-2"
+              *ngIf="isEditing"
+              (click)="handleDeleteCard()"
+            >
+              Remover
+            </button>
+            <button class="btn btn-info white" (click)="handleSubmitCard()">
+              <span *ngIf="isEditing">Salvar</span>
+              <span *ngIf="!isEditing">Adicionar</span>
+            </button>
           </div>
         </div>
       </div>
@@ -219,7 +232,9 @@
           data-bs-dismiss="modal"
           aria-label="Close"
           id="closeColButton"
-          (click)="modalComponent?.hide(); isEditing = false; this.cleanModelCol();"
+          (click)="
+            modalComponent?.hide(); isEditing = false; this.cleanModelCol()
+          "
         ></button>
       </div>
       <div class="modal-body">
@@ -235,6 +250,13 @@
             />
           </div>
           <div class="center">
+            <button
+              class="btn btn-danger white margin-2"
+              *ngIf="isEditing"
+              (click)="handleDeleteCollumn()"
+            >
+              Remover
+            </button>
             <button
               class="btn btn-info white"
               (click)="handleSubmitNewCollumn()"
@@ -287,6 +309,12 @@
               ></textarea>
             </div>
             <div class="center">
+              <button
+                class="btn btn-danger white margin-2"
+                (click)="handleDeleteBoard()"
+              >
+                Remover
+              </button>
               <button class="btn btn-info white" (click)="handleUpdateBoard()">
                 Salvar alterações
               </button>

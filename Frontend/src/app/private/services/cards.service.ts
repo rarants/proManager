@@ -9,8 +9,8 @@ import { first, Observable, tap } from "rxjs";
 export class CardsService {
   constructor(private http: HttpClient) {}
 
-  public getCardList(collumn_id: Number): Observable<any> {
-    return this.http.get<Card[]>(`http://localhost:8080/collumn/card/${collumn_id}`).pipe(first());
+  public getCardList(card_id: Number): Observable<any> {
+    return this.http.get<Card[]>(`http://localhost:8080/collumn/card/${card_id}`).pipe(first());
   }
 
   public postCard(card: Card): Observable<any> {
@@ -22,6 +22,12 @@ export class CardsService {
   public updateCard(card: Card): Observable<any> {
     return this.http
       .put<Card>(`http://localhost:8080/card/${card.id}`, card)
+      .pipe(first());
+  }
+
+  public deleteCard(card_id: Number): Observable<any> {
+    return this.http
+      .delete<Card>(`http://localhost:8080/card/${card_id}`)
       .pipe(first());
   }
 }

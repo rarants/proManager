@@ -24,4 +24,10 @@ export class CollumnsService {
       .put<Collumn>(`http://localhost:8080/collumn/${collumn.id}`, collumn)
       .pipe(first());
   }
+
+  public deleteCollumn(collumn_id: Number): Observable<any> {
+    return this.http
+      .delete<Collumn>(`http://localhost:8080/collumn/${collumn_id}`)
+      .pipe(first());
+  }
 }

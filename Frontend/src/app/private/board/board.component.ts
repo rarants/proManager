@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit {
     board: {
       id: 0,
     },
-    cards: []
+    cards: [],
   };
 
   cardModel: Card = {
@@ -44,9 +44,9 @@ export class BoardComponent implements OnInit {
     start_date: null,
     end_date: null,
     collumn: {
-      id: 0
-    }
-  }
+      id: 0,
+    },
+  };
 
   tags = [
     {
@@ -88,7 +88,7 @@ export class BoardComponent implements OnInit {
     private route: ActivatedRoute,
     private boardsService: BoardsService,
     private collumnsService: CollumnsService,
-    private cardService: CardsService,
+    private cardsService: CardsService,
     private router: Router,
     private toastr: ToastrService
   ) {}
@@ -98,6 +98,7 @@ export class BoardComponent implements OnInit {
     });
     this.getBoardInfo(this.board_id);
   }
+
   setShowModalCard() {
     var modal = document.getElementById("modalCard");
     this.modalComponent = new bootstrap.Modal(modal || "{}");
@@ -113,7 +114,8 @@ export class BoardComponent implements OnInit {
     this.modalComponent = new bootstrap.Modal(modal || "{}");
     this.modalComponent.show();
   }
-  setHideModalCol() {
+
+  setHideModal() {
     var modal = document.getElementById("closeColButton");
     modal?.click();
   }
@@ -121,6 +123,7 @@ export class BoardComponent implements OnInit {
     var modal = document.getElementById("closeBoardButton");
     modal?.click();
   }
+
   handleOpenColumnModal(column: any) {
     this.isEditing = true;
     this.collumnModel.id = column.id;
@@ -128,8 +131,21 @@ export class BoardComponent implements OnInit {
     this.collumnModel.board.id = this.board.id;
     this.setShowModalCol();
   }
-  handleOpenCardModal(collumn: Collumn) {
-    this.cardModel.collumn.id = collumn;
+  handleOpenCardModal(collumn: Collumn, card: Card | null) {
+    this.cleanModelCard();
+    this.cardModel.collumn.id = collumn.id;
+    if (card === null) {
+      // new
+      this.isEditing = false;
+    } else if (card !== null) {
+      //update
+      this.isEditing = true;
+      this.cardModel.id = card.id;
+      this.cardModel.title = card.title;
+      this.cardModel.description = card.description;
+      this.cardModel.start_date = card.start_date;
+      this.cardModel.end_date = card.end_date;
+    }
     this.setShowModalCard();
   }
 
@@ -137,18 +153,17 @@ export class BoardComponent implements OnInit {
     this.boardsService.getBoard(id).subscribe(
       (response) => {
         this.board = response;
-        this.getCollumnsList(id);
       },
       (error) => {
         this.error = error;
       }
     );
   }
-  getCollumnsList(id: Number) {
-    this.collumnsService.getCollumnList(id).subscribe((response) => {
-      this.board.collumns = response;
-    });
+  handleSubmitCard() {
+    if (!this.isEditing) this.handleSubmitNewCard();
+    else this.handleUpdateCard();
   }
+
   handleSubmitNewCollumn() {
     if (!this.isEditing) {
       try {
@@ -162,7 +177,7 @@ export class BoardComponent implements OnInit {
           }
         );
         this.toastr.success("Coluna adicionada com sucesso");
-        this.setHideModalCol();
+        this.setHideModal();
       } catch (e) {
         this.toastr.error(
           "Ocorreu um erro ao cadastrar a coluna. Verifique as informações e tente novamente"
@@ -174,29 +189,27 @@ export class BoardComponent implements OnInit {
   }
   handleSubmitNewCard() {
     try {
-      console.log(this.cardModel)
-      this.cardService.postCard(this.cardModel).subscribe(
+      this.cardsService.postCard(this.cardModel).subscribe(
         (response) => {
-          /* this.board.collumns.map((e: { id: any; cards: any[]; }) => {
+          this.board.collumns.map((e: { id: any; cards: any[] }) => {
             if (e.id === this.cardModel.collumn.id) {
               e.cards.push(response);
             }
-          }); */
-          //this.board.collumns.push(response);
-          console.log(this.board);
+          });
         },
         (error) => {
           this.error = error;
         }
       );
       this.toastr.success("Cartão adicionado com sucesso");
-      // this.setHideModalCol();
+      this.setHideModal();
     } catch (e) {
       this.toastr.error(
         "Ocorreu um erro ao cadastrar o cartão. Verifique as informações e tente novamente"
       );
     }
   }
+
   handleUpdateBoard() {
     try {
       this.boardsService.updateBoard(this.board).subscribe((response) => {
@@ -221,10 +234,25 @@ export class BoardComponent implements OnInit {
         });
       this.toastr.success("Alterações salvas com sucesso");
       this.getBoardInfo(this.board_id);
-      this.setHideModalCol();
+      this.setHideModal();
     } catch (e) {
       this.toastr.error(
         "Ocorreu um erro ao atualizar a coluna. Verifique as informações e tente novamente"
+      );
+    }
+  }
+  handleUpdateCard() {
+    this.isEditing = false;
+    try {
+      this.cardsService.updateCard(this.cardModel).subscribe((response) => {
+        this.cardModel.title = response.title;
+      });
+      this.toastr.success("Alterações salvas com sucesso");
+      this.getBoardInfo(this.board_id);
+      this.setHideModal();
+    } catch (e) {
+      this.toastr.error(
+        "Ocorreu um erro ao atualizar o cartão. Verifique as informações e tente novamente"
       );
     }
   }
@@ -233,5 +261,47 @@ export class BoardComponent implements OnInit {
     this.collumnModel.id = 0;
     this.collumnModel.title = "";
     this.collumnModel.board.id = 0;
+  }
+  cleanModelCard() {
+    this.cardModel.id = 0;
+    this.cardModel.title = "";
+    this.cardModel.description = "";
+    this.cardModel.start_date = null;
+    this.cardModel.end_date = null;
+    this.cardModel.collumn.id = 0;
+  }
+
+  handleDeleteCard() {
+    this.isEditing = false;
+    try {
+      this.cardsService.deleteCard(this.cardModel.id).subscribe();
+      this.toastr.success("Cartão removido com sucesso");
+      this.getBoardInfo(this.board_id);
+      this.setHideModal();
+    } catch (e) {
+      this.toastr.error("Ocorreu um erro ao remover o cartão.");
+    }
+  }
+  handleDeleteCollumn() {
+    this.isEditing = false;
+    try {
+      this.collumnsService.deleteCollumn(this.collumnModel.id).subscribe();
+      this.toastr.success("Coluna removida com sucesso");
+      this.getBoardInfo(this.board_id);
+      this.setHideModal();
+    } catch (e) {
+      this.toastr.error("Ocorreu um erro ao remover a coluna.");
+    }
+  }
+  handleDeleteBoard() {
+    this.isEditing = false;
+    try {
+      this.boardsService.deleteBoard(this.board_id).subscribe();
+      this.toastr.success("Quadro removido com sucesso");
+      this.setHideModal();
+      this.router.navigateByUrl("/user/boards");
+    } catch (e) {
+      this.toastr.error("Ocorreu um erro ao remover o quadro.");
+    }
   }
 }
