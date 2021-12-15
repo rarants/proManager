@@ -28,8 +28,8 @@ public class Card {
 
 	@JsonBackReference
 	@ManyToOne
-	@ApiModelProperty(notes = "Collumn that card is related", name = "collumn_card", required = true)
-	private Collumn collumn;
+	@ApiModelProperty(notes = "Column that card is related", name = "column_card", required = true)
+	private Collumn column;
 	
 	@Column(nullable = false)
 	@ApiModelProperty(notes = "Card's title", name = "title", required = true)
@@ -76,12 +76,12 @@ public class Card {
 		this.title = title;
 	}
 	
-	public Collumn getCollumn() {
-		return collumn;
+	public Collumn getColumn() {
+		return column;
 	}
 
-	public void setCollumn(Collumn collumn) {
-		this.collumn = collumn;
+	public void setColumn(Collumn column) {
+		this.column = column;
 	}
 
 	public String getDescription() {

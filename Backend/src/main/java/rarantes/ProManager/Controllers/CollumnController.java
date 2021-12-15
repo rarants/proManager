@@ -24,28 +24,28 @@ import rarantes.ProManager.Repositories.CollumnRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/collumn")
+@RequestMapping("/column")
 public class CollumnController {
 
 	@Autowired
-	private CollumnRepository collumnRepository;
+	private CollumnRepository columnRepository;
 	
 	@Autowired
 	private BoardRepository boardRepository;
 	
 	/* index route */
     @GetMapping
-	@ApiOperation(value = "Show all user's collumns", response = Iterable.class)
+	@ApiOperation(value = "Show all user's columns", response = Iterable.class)
     public List<Collumn> index() {
-        return collumnRepository.findAll();
+        return columnRepository.findAll();
     }
     
     /* show route */
     @GetMapping("/board/{id}")
-    @ApiOperation(value = "Show collumn by id", response = Iterable.class)
+    @ApiOperation(value = "Show column by id", response = Iterable.class)
     public List<Collumn> show(@PathVariable Long id) {
         try {
-            return collumnRepository.findByBoardId(id);
+            return columnRepository.findByBoardId(id);
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -54,28 +54,28 @@ public class CollumnController {
     /* create route */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Create new collumn", response = Iterable.class)
-    public Collumn post(@RequestBody Collumn collumn) {
-    	//System.out.println(collumn.getBoard().getId());
-        //Optional<Board> board = boardRepository.findById(collumn.getBoard().getId());
-        return collumnRepository.save(collumn);
+    @ApiOperation(value = "Create new column", response = Iterable.class)
+    public Collumn post(@RequestBody Collumn column) {
+    	//System.out.println(column.getBoard().getId());
+        //Optional<Board> board = boardRepository.findById(column.getBoard().getId());
+        return columnRepository.save(column);
     }
 	
     /* update route */
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update collumn title", response = Iterable.class)
-    public Collumn put(@RequestBody Collumn collumn, @PathVariable Long id) {
+    @ApiOperation(value = "Update column title", response = Iterable.class)
+    public Collumn put(@RequestBody Collumn column, @PathVariable Long id) {
     	
-    	Collumn col = collumnRepository.getOne(id);
-    	col.setTitle(collumn.getTitle());
+    	Collumn col = columnRepository.getOne(id);
+    	col.setTitle(column.getTitle());
     	
-        return collumnRepository.save(col);
+        return columnRepository.save(col);
     }
 	
     /* delete route */
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete collumn", response = Iterable.class)
+    @ApiOperation(value = "Delete column", response = Iterable.class)
     public void delete(@PathVariable Long id) {
-    	collumnRepository.deleteById(id);
+    	columnRepository.deleteById(id);
     }
 }

@@ -36,8 +36,8 @@ public class Board {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@ApiModelProperty(notes = "Board's collumns", name = "collumns", required = true)
-	private List<Collumn> collumns = new ArrayList<Collumn>();
+	@ApiModelProperty(notes = "Board's columns", name = "columns", required = true)
+	private List<Collumn> columns = new ArrayList<Collumn>();
 	
 	public Long getId() {
 		return id;
@@ -63,12 +63,12 @@ public class Board {
 		this.description = description;
 	}
 
-	public List<Collumn> getCollumns() {
-		return collumns;
+	public List<Collumn> getColumns() {
+		return columns;
 	}
 
-	public void setCollumns(List<Collumn> collumns) {
-		this.collumns = collumns;
+	public void setColumns(List<Collumn> columns) {
+		this.columns = columns;
 	}
 
 	@Override

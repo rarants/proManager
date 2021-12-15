@@ -36,13 +36,13 @@ public class Collumn {
 	@ApiModelProperty(notes = "Column's title", name = "title", required = true)
 	private String title;
 
-	/*@OneToMany(mappedBy = "collumn", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	/*@OneToMany(mappedBy = "column", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@ApiModelProperty(notes = "Column's cards", name = "cards", required = true)
 	private List<Card> cards = new ArrayList<Card>();
 	 */
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "collumn", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "column", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@ApiModelProperty(notes = "Column's cards", name = "cards", required = true)
 	private List<Card> cards = new ArrayList<Card>();
 	
@@ -79,7 +79,7 @@ public class Collumn {
 	}
 */
 	/*
-	 * @Override public String toString() { return "Collumn [id=" + id + ", board="
+	 * @Override public String toString() { return "Column [id=" + id + ", board="
 	 * + board + ", title=" + title + "]"; }
 	 */
 }
