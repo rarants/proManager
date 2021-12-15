@@ -38,7 +38,7 @@
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="col col-item" *ngFor="let col of board.collumns">
+          <div class="col col-item" *ngFor="let col of board.columns">
             <div class="card">
               <div class="card-header h6">
                 <div class="row">
@@ -246,20 +246,20 @@
               class="form-control"
               id="registerInputTitle"
               placeholder="Digite o título da coluna"
-              [(ngModel)]="collumnModel.title"
+              [(ngModel)]="columnModel.title"
             />
           </div>
           <div class="center">
             <button
               class="btn btn-danger white margin-2"
               *ngIf="isEditing"
-              (click)="handleDeleteCollumn()"
+              (click)="handleDeleteColumn()"
             >
               Remover
             </button>
             <button
               class="btn btn-info white"
-              (click)="handleSubmitNewCollumn()"
+              (click)="handleSubmitColumn()"
             >
               <span *ngIf="isEditing">Salvar</span>
               <span *ngIf="!isEditing">Adicionar</span>

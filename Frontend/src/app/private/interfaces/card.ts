@@ -4,5 +4,5 @@ export interface Card {
     description: String,
     start_date: any,
     end_date: any,
-    collumn: any
+    column: any
 }

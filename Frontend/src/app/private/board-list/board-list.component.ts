@@ -20,7 +20,7 @@ export class BoardListComponent implements OnInit {
     id: 0,
     title: "",
     description: "",
-    collumns: []
+    columns: []
   };
 
   boards: Board[] = [];

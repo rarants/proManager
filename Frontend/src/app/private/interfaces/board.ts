@@ -1,8 +1,8 @@
-import { Collumn } from "./collumn";
+import { Column } from "./column";
 
 export interface Board {
     id: Number,
     title: String,
     description: String,
-    collumns: Collumn[]
+    columns: Column[]
 }

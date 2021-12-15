@@ -8,8 +8,8 @@ import * as bootstrap from "bootstrap";
 import { Modal } from "bootstrap";
 import { Board } from "../interfaces/board";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { CollumnsService } from "../services/collumns.service";
-import { Collumn } from "../interfaces/collumn";
+import { ColumnsService } from "../services/columns.service";
+import { Column } from "../interfaces/column";
 import { ToastrService } from "ngx-toastr";
 import { Card } from "../interfaces/card";
 import { CardsService } from "../services/cards.service";
@@ -26,9 +26,9 @@ export class BoardComponent implements OnInit {
   faAngleLeft = faAngleLeft;
   isEditing = false;
   board_id!: Number;
-  collumns: Collumn[] = [];
+  columns: Column[] = [];
 
-  collumnModel: Collumn = {
+  columnModel: Column = {
     id: 0,
     title: "",
     board: {
@@ -43,7 +43,7 @@ export class BoardComponent implements OnInit {
     description: "",
     start_date: null,
     end_date: null,
-    collumn: {
+    column: {
       id: 0,
     },
   };
@@ -87,7 +87,7 @@ export class BoardComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private boardsService: BoardsService,
-    private collumnsService: CollumnsService,
+    private columnsService: ColumnsService,
     private cardsService: CardsService,
     private router: Router,
     private toastr: ToastrService
@@ -126,14 +126,14 @@ export class BoardComponent implements OnInit {
 
   handleOpenColumnModal(column: any) {
     this.isEditing = true;
-    this.collumnModel.id = column.id;
-    this.collumnModel.title = column.title;
-    this.collumnModel.board.id = this.board.id;
+    this.columnModel.id = column.id;
+    this.columnModel.title = column.title;
+    this.columnModel.board.id = this.board.id;
     this.setShowModalCol();
   }
-  handleOpenCardModal(collumn: Collumn, card: Card | null) {
+  handleOpenCardModal(column: Column, card: Card | null) {
     this.cleanModelCard();
-    this.cardModel.collumn.id = collumn.id;
+    this.cardModel.column.id = column.id;
     if (card === null) {
       // new
       this.isEditing = false;
@@ -159,40 +159,44 @@ export class BoardComponent implements OnInit {
       }
     );
   }
+
   handleSubmitCard() {
     if (!this.isEditing) this.handleSubmitNewCard();
     else this.handleUpdateCard();
   }
-
-  handleSubmitNewCollumn() {
+  handleSubmitColumn() {
     if (!this.isEditing) {
-      try {
-        this.collumnModel.board.id = this.board.id;
-        this.collumnsService.postCollumn(this.collumnModel).subscribe(
-          (response) => {
-            this.board.collumns.push(response);
-          },
-          (error) => {
-            this.error = error;
-          }
-        );
-        this.toastr.success("Coluna adicionada com sucesso");
-        this.setHideModal();
-      } catch (e) {
-        this.toastr.error(
-          "Ocorreu um erro ao cadastrar a coluna. Verifique as informações e tente novamente"
-        );
-      }
+      this.handleSubmitNewColumn();
     } else {
-      this.handleUpdateCollumn();
+      this.handleUpdateColumn();
+    }
+  }
+
+  handleSubmitNewColumn() {
+    try {
+      this.columnModel.board.id = this.board.id;
+      this.columnsService.postColumn(this.columnModel).subscribe(
+        (response) => {
+          this.board.columns.push(response);
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
+      this.toastr.success("Coluna adicionada com sucesso");
+      this.setHideModal();
+    } catch (e) {
+      this.toastr.error(
+        "Ocorreu um erro ao cadastrar a coluna. Verifique as informações e tente novamente"
+      );
     }
   }
   handleSubmitNewCard() {
     try {
       this.cardsService.postCard(this.cardModel).subscribe(
         (response) => {
-          this.board.collumns.map((e: { id: any; cards: any[] }) => {
-            if (e.id === this.cardModel.collumn.id) {
+          this.board.columns.map((e: { id: any; cards: any[] }) => {
+            if (e.id === this.cardModel.column.id) {
               e.cards.push(response);
             }
           });
@@ -224,13 +228,13 @@ export class BoardComponent implements OnInit {
       );
     }
   }
-  handleUpdateCollumn() {
+  handleUpdateColumn() {
     this.isEditing = false;
     try {
-      this.collumnsService
-        .updateCollumn(this.collumnModel)
+      this.columnsService
+        .updateColumn(this.columnModel)
         .subscribe((response) => {
-          this.collumnModel.title = response.title;
+          this.columnModel.title = response.title;
         });
       this.toastr.success("Alterações salvas com sucesso");
       this.getBoardInfo(this.board_id);
@@ -258,9 +262,9 @@ export class BoardComponent implements OnInit {
   }
 
   cleanModelCol() {
-    this.collumnModel.id = 0;
-    this.collumnModel.title = "";
-    this.collumnModel.board.id = 0;
+    this.columnModel.id = 0;
+    this.columnModel.title = "";
+    this.columnModel.board.id = 0;
   }
   cleanModelCard() {
     this.cardModel.id = 0;
@@ -268,7 +272,7 @@ export class BoardComponent implements OnInit {
     this.cardModel.description = "";
     this.cardModel.start_date = null;
     this.cardModel.end_date = null;
-    this.cardModel.collumn.id = 0;
+    this.cardModel.column.id = 0;
   }
 
   handleDeleteCard() {
@@ -282,10 +286,10 @@ export class BoardComponent implements OnInit {
       this.toastr.error("Ocorreu um erro ao remover o cartão.");
     }
   }
-  handleDeleteCollumn() {
+  handleDeleteColumn() {
     this.isEditing = false;
     try {
-      this.collumnsService.deleteCollumn(this.collumnModel.id).subscribe();
+      this.columnsService.deleteColumn(this.columnModel.id).subscribe();
       this.toastr.success("Coluna removida com sucesso");
       this.getBoardInfo(this.board_id);
       this.setHideModal();
